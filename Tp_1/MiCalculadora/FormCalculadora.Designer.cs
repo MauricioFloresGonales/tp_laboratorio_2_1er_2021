@@ -95,7 +95,6 @@
             this.txtOperadorUno.Name = "txtOperadorUno";
             this.txtOperadorUno.Size = new System.Drawing.Size(268, 22);
             this.txtOperadorUno.TabIndex = 0;
-            this.txtOperadorUno.TextChanged += new System.EventHandler(this.txtOperadorUno_TextChanged);
             // 
             // txtOperadorDos
             // 
@@ -103,7 +102,6 @@
             this.txtOperadorDos.Name = "txtOperadorDos";
             this.txtOperadorDos.Size = new System.Drawing.Size(275, 22);
             this.txtOperadorDos.TabIndex = 2;
-            this.txtOperadorDos.TextChanged += new System.EventHandler(this.txtOperadorDos_TextChanged);
             // 
             // cmbOperador
             // 
@@ -117,7 +115,6 @@
             this.cmbOperador.Name = "cmbOperador";
             this.cmbOperador.Size = new System.Drawing.Size(60, 24);
             this.cmbOperador.TabIndex = 1;
-            this.cmbOperador.SelectedIndexChanged += new System.EventHandler(this.cmbOperador_SelectedIndexChanged);
             // 
             // lblResultado
             // 
@@ -149,6 +146,7 @@
             this.Name = "FormCalculadora";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Calculadora Mauricio Luciano Gonzales Flores 2-C";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormCalculadora_FormClosing);
             this.Load += new System.EventHandler(this.FormCalculadora_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

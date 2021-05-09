@@ -10,8 +10,6 @@ namespace Entidades
     {
         private static string ValidarOperador(char operador)
         {
-            if (operador == null)
-                return "+";
             switch (operador)
             {
                 case '-':
@@ -26,23 +24,19 @@ namespace Entidades
         }
         public static double Operar(Numero num1, Numero num2, string operador)
         {
-            double retorno;
-            switch (Caluladora.ValidarOperador(operador[0]))
+            if (operador == "" || operador.Length > 1)
+                operador = "+";
+            switch (Caluladora.ValidarOperador(char.Parse(operador)))
             {
                 case "-":
-                    retorno = num1 - num2;
-                    break;
+                        return num1 - num2;
                 case "/":
-                    retorno = num1 / num2;
-                    break;
+                        return num1 / num2;
                 case "*":
-                    retorno = num1 * num2;
-                    break;
+                        return num1 * num2;
                 default:
-                    retorno = num1 + num2;
-                    break;
+                        return num1 + num2;
             }
-            return retorno;
         }
     }
 }

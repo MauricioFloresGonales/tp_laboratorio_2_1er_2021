@@ -19,6 +19,14 @@ namespace Entidades
         {
             this.numero = 0;
         }
+        public Numero(string strNumero) : this()
+        {
+            this.SetNumero = strNumero;
+        }
+        public Numero(double numero):this(numero.ToString())
+        {
+        }
+        
         public static double operator +(Numero num1, Numero num2)
         {
             return num1.numero + num2.numero;
@@ -68,8 +76,8 @@ namespace Entidades
         }
         public static string DecimalBinario(string numero)
         {
-            double aux;
-            if (double.TryParse(numero, out aux))
+            ulong aux;
+            if (ulong.TryParse(numero, out aux))
             {
                 return DecimalBinario(aux);
             }
