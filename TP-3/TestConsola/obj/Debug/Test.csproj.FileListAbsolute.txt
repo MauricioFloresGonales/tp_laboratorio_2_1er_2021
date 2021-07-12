@@ -1,0 +1,13 @@
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\obj\Debug\Test.csprojAssemblyReference.cache
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\obj\Debug\Test.csproj.CoreCompileInputs.cache
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\bin\Debug\TestConsola.exe.config
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\bin\Debug\TestConsola.exe
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\bin\Debug\TestConsola.pdb
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\bin\Debug\App.exe
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\bin\Debug\TP-3-GonzalesFloresMauricioLuciano.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\bin\Debug\App.pdb
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\bin\Debug\App.exe.config
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\bin\Debug\TP-3-GonzalesFloresMauricioLuciano.pdb
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\obj\Debug\Test.csproj.CopyComplete
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\obj\Debug\TestConsola.exe
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TestConsola\obj\Debug\TestConsola.pdb
