@@ -1,0 +1,22 @@
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\es\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\es\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\es\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Test.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Test.pdb
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\App.exe
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\TP-3-GonzalesFloresMauricioLuciano.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\App.pdb
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\App.exe.config
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\TP-3-GonzalesFloresMauricioLuciano.pdb
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\obj\Debug\Test Unitarios.csprojAssemblyReference.cache
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\obj\Debug\Test Unitarios.csproj.CoreCompileInputs.cache
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\obj\Debug\Test Unitarios.csproj.CopyComplete
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\obj\Debug\Test.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\Test\obj\Debug\Test.pdb
