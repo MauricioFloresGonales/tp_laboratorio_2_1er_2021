@@ -44,9 +44,11 @@
     <Compile Include="Archivos.cs" />
     <Compile Include="Auto.cs" />
     <Compile Include="Carroceria.cs" />
+    <Compile Include="Chasis.cs" />
     <Compile Include="DBConexion.cs" />
     <Compile Include="IDetalles.cs" />
     <Compile Include="ExtencionDeFormato.cs" />
+    <Compile Include="Motocicleta.cs" />
     <Compile Include="motor.cs" />
     <Compile Include="Parte.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

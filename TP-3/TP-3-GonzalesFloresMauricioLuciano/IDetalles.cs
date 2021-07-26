@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entidades
 {
-    interface IDetalles
+    public interface IDetalles
     {
         string MostrarDatos();
     }

@@ -1,0 +1,17 @@
+|---------------------------------------|
+| Creado por:test1   Nombre:testMotoUno	|
+|					|
+|-------------=Chasis=--------------|
+|         -Tipo de chasis: Scooter
+			|
+|					|
+|         -Tipo de motor: CicloOtto
+                  |
+|					|
+|         -Tipo de ruedas: Invierno
+-Tamanio: Mediana
+                  |
+|					|
+|       TIEMPO DE FABRICACIÓN: 8       |
+|					|
+

@@ -4,3 +4,9 @@ C:\Users\pipoca\source\repos\TP-3-GonzalesFloresMauricioLuciano\TP-3-GonzalesFlo
 C:\Users\pipoca\source\repos\TP-3-GonzalesFloresMauricioLuciano\TP-3-GonzalesFloresMauricioLuciano\obj\Debug\Enridades.csproj.CoreCompileInputs.cache
 C:\Users\pipoca\source\repos\TP-3-GonzalesFloresMauricioLuciano\TP-3-GonzalesFloresMauricioLuciano\obj\Debug\TP-3-GonzalesFloresMauricioLuciano.dll
 C:\Users\pipoca\source\repos\TP-3-GonzalesFloresMauricioLuciano\TP-3-GonzalesFloresMauricioLuciano\obj\Debug\TP-3-GonzalesFloresMauricioLuciano.pdb
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TP-3-GonzalesFloresMauricioLuciano\obj\Debug\Enridades.csprojAssemblyReference.cache
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TP-3-GonzalesFloresMauricioLuciano\obj\Debug\Enridades.csproj.CoreCompileInputs.cache
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TP-3-GonzalesFloresMauricioLuciano\obj\Debug\TP-3-GonzalesFloresMauricioLuciano.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TP-3-GonzalesFloresMauricioLuciano\obj\Debug\TP-3-GonzalesFloresMauricioLuciano.pdb
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TP-3-GonzalesFloresMauricioLuciano\bin\Debug\TP-3-GonzalesFloresMauricioLuciano.dll
+C:\Users\pipoca\GitHub\tp_laboratorio_2\TP-3\TP-3-GonzalesFloresMauricioLuciano\bin\Debug\TP-3-GonzalesFloresMauricioLuciano.pdb

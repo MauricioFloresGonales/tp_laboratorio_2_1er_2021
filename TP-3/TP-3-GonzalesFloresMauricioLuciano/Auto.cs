@@ -1,37 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 
 namespace Entidades
 {
-    public delegate void Construir(object nuevoAuto);
-    public sealed class Auto : IDetalles
+    public delegate void ConstruirAuto(object nuevoAuto);
+    public class Auto : Vehiculo, IDetalles
     {
-        public event Construir EventoConstruir;
+        public event ConstruirAuto EventoConstruirAuto;
 
-        int id;
-        string nombre;
-        string creadoPor;
         Carroceria carroceria;
         Rueda ruedas;
         Motor motor;
 
         #region Propiedades
-        public int Id
-        {
-            get { return this.id; }
-        }
-        public string Nombre
-        {
-            get { return this.nombre; }
-        }
-        public string CreadoPor
-        {
-            get { return this.creadoPor; }
-        }
         public Carroceria Carroceria
         {
             get { return this.carroceria; }
@@ -44,43 +25,42 @@ namespace Entidades
         {
             get { return this.motor; }
         }
-
         #endregion
 
         #region Constructores
-        public Auto()
+        public Auto():base()
         {
-            this.creadoPor = "Desconocido";
         }
-        public Auto(string creadoPor, string nombre, Carroceria carroceria, Motor motor, Rueda ruedas)
+        public Auto(string creadoPor, string nombre, Carroceria carroceria, Motor motor, Rueda ruedas) : base(creadoPor, nombre)
         {
-            this.nombre = nombre;
-            this.creadoPor = creadoPor;
             this.carroceria = carroceria;
             this.motor = motor;
             this.ruedas = ruedas;
         }
-        public Auto(string creadoPor, string nombre, string carroceriaEstilo, string carroceriaCantPuertas, string motorTipo, string ruedaTipo, string ruedaTamanio)
+        public Auto(string nombre, string creadoPor, string carroceriaEstilo, string carroceriaCantPuertas, string motorTipo, string ruedaTipo, string ruedaTamanio) : base(nombre, creadoPor)
         {
-            this.nombre = nombre;
-            this.creadoPor = creadoPor;
             this.carroceria = new Carroceria(carroceriaEstilo, int.Parse(carroceriaCantPuertas));
             this.motor = new Motor(motorTipo);
             this.ruedas = new Rueda(ruedaTipo,ruedaTamanio);
         }
-        public Auto(int id, string creadoPor, string nombre, string carroceriaEstilo, string carroceriaCantPuertas, string motorTipo, string ruedaTipo, string ruedaTamanio):this(creadoPor,nombre,carroceriaEstilo,carroceriaCantPuertas,motorTipo,ruedaTipo,ruedaTamanio)
+        public Auto(int id, string creadoPor, string nombre) : base(id, creadoPor, nombre)
         {
-            this.id = id;
+        }
+        public Auto(int id, string nombre, string creadoPor, string carroceriaEstilo, string carroceriaCantPuertas, string motorTipo, string ruedaTipo, string ruedaTamanio) : this(id, nombre, creadoPor)
+        {
+            this.carroceria = new Carroceria(carroceriaEstilo, int.Parse(carroceriaCantPuertas));
+            this.motor = new Motor(motorTipo);
+            this.ruedas = new Rueda(ruedaTipo, ruedaTamanio);
         }
         #endregion
 
         #region Metodos
 
-        public int TiempoDeProcduccion()
+        public override int TiempoDeProcduccion()
         {
             return carroceria.CalcularTiempo() + ruedas.CalcularTiempo() + motor.CalcularTiempo();
         }
-        public bool AutoExiste(List<Auto> listaDeAutos)
+        public override bool Existe<Auto>(List<Auto> listaDeAutos)
         {
             if(listaDeAutos.Count != 0)
             {
@@ -96,14 +76,9 @@ namespace Entidades
         }
         public void Proceso(object nuevoAuto)
         {
-            if (!object.ReferenceEquals(this.EventoConstruir, null))
-                this.EventoConstruir.Invoke(nuevoAuto);
+            if (!object.ReferenceEquals(this.EventoConstruirAuto, null))
+                this.EventoConstruirAuto.Invoke(nuevoAuto);
         }
-        public void Fabricacion()
-        {
-            Thread.Sleep(this.TiempoDeProcduccion()*1000);
-        }
-
         #endregion
 
         #region Sobrecargas
@@ -125,15 +100,16 @@ namespace Entidades
             }
             return listaDeAutos;
         }
-        public static bool operator ==(Auto autoUno, Auto autoDos)
+        public static bool operator ==(object autoUno, Auto autoDos)
         {
-            if (autoUno.CreadoPor == autoDos.CreadoPor && autoUno.Nombre == autoDos.Nombre)
+            Auto auxAuto = (Auto)autoUno;
+            if (auxAuto.CreadoPor == autoDos.CreadoPor && auxAuto.Nombre == autoDos.Nombre)
             {
                 return true;
             }
             return false;
         }
-        public static bool operator !=(Auto autoUno, Auto autoDos)
+        public static bool operator !=(object autoUno, Auto autoDos)
         {
             return !(autoUno == autoDos);
         }
@@ -143,8 +119,8 @@ namespace Entidades
         public string MostrarDatos()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Nombre:{this.nombre}");
-            sb.AppendLine($"Creado por:{this.creadoPor}");
+            sb.AppendLine($"Nombre:{base.Nombre}");
+            sb.AppendLine($"Creado por:{base.CreadoPor}");
             sb.AppendLine($"\t-=Carroceria=-\n{this.carroceria.MostrarDatos()}");
             sb.AppendLine($"\t-=Motor=-\n{this.motor.MostrarDatos()}");
             sb.AppendLine($"\t-=Ruedas=-\n{this.ruedas.MostrarDatos()}");

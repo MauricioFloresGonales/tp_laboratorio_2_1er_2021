@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Entidades;
 using System.Threading;
@@ -26,10 +19,12 @@ namespace App
         {
             try
             {
+                this.rbtAuto.Checked = true;
+                this.btnFabricar.Enabled = false;
+                this.lblFabricados.Text = $"Vehiculos a Fabricar: {Taller.listaDeAutos.Count + Taller.listaDeMotos.Count}";
                 this.cmbRuedasTamanio.Items.AddRange(Rueda.AgregarTamanioAlCmb());
                 this.cmbRuedaTipo.Items.AddRange(Rueda.AgregarTipoAlCmb());
                 this.cmbMotor.Items.AddRange(Motor.AgregarAlCmb());
-                this.cmbCarroceria.Items.AddRange(Carroceria.AgregarAlCmb());
             }
             catch (Exception ex)
             {
@@ -75,23 +70,18 @@ namespace App
             this.cmbMotor.Text = "";
             this.cmbCarroceria.Text = "";
             this.numUpDownnCantPuertas.Value = 2;
+            this.rbtAuto.Checked = false;
+            this.rbtMotocicleta.Checked = false;
         }
-        private void btn_fabricar_Click(object sender, EventArgs e)
+        private void btnAgregar_Click(object sender, EventArgs e)
         {
             try
             {
-                string login = Archivos.LeerArchivoXml<string>();
-                Auto nuevoAuto = new Auto(
-                    login,
-                    this.txtNombre.Text,
-                    this.cmbCarroceria.Text,
-                    this.numUpDownnCantPuertas.Value.ToString(),
-                    this.cmbMotor.Text,
-                    this.cmbRuedaTipo.Text,
-                    this.cmbRuedasTamanio.Text);
-                Taller.AgregarUnVehiculo(nuevoAuto);
-                MessageBox.Show(nuevoAuto.FormatoAlert(), "Auto Creado");
-                ActualizarLblFabricados();
+                this.Agregar();
+                this.ActualizarLblFabricados();
+                this.ActualizarRtbLista();
+
+                this.ActivarBtnFabricacion();
             }
             catch (Exception ex)
             {
@@ -105,8 +95,8 @@ namespace App
 
         private void btnMostrarAutos_Click(object sender, EventArgs e)
         {
-            ActualizarRtbLista();
-            ActualizarLblFabricados();
+            this.ActualizarRtbLista();
+            this.ActualizarLblFabricados();
         }
 
         private void btnFabricar_Click(object sender, EventArgs e)
@@ -115,22 +105,52 @@ namespace App
             {
                 this.procesoDeFabricacion = new Thread(this.ActivarFabricacion);
                 this.procesoDeFabricacion.Start();
+                if (Taller.listaDeAutos.Count > 0 || Taller.listaDeMotos.Count > 0)
+                    this.lblProceso.Text = "Proceso: Trabajando";
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
         }
+        private void rbtAuto_CheckedChanged(object sender, EventArgs e)
+        {
+            this.lblCarroceria.Text = "CARROCERIA";
+            this.lblCantPuertas.Text = "Puertas";
+            this.numUpDownnCantPuertas.Enabled = true;
+            this.cmbCarroceria.Items.Clear();
+            this.cmbCarroceria.Items.AddRange(Carroceria.AgregarAlCmb());
+        }
+
+        private void rbtMotocicleta_CheckedChanged(object sender, EventArgs e)
+        {
+            this.lblCarroceria.Text = "CHASIS";
+            this.lblCantPuertas.Text = "";
+            this.numUpDownnCantPuertas.Enabled = false;
+            this.cmbCarroceria.Items.Clear();
+            this.cmbCarroceria.Items.AddRange(Chasis.AgregarAlCmb());
+        }
         #endregion
 
         #region Barra de opciones
+        private void ingresarUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmLogin frmLogin = new FrmLogin();
+            if (frmLogin.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
         private void traerAutosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                int cantidad = DBConexion.TraerAutos(Taller.listaDeAutos);
-                ActualizarRtbLista();
+                int cantidad = DBConexion.TraerAutos();
+                this.ActualizarRtbLista();
                 MessageBox.Show($"Se trajeron {cantidad} autos de la BD", "Select");
+
+                this.ActivarBtnFabricacion();
+                this.ActualizarLblFabricados();
             }
             catch (Exception ex)
             {
@@ -142,6 +162,14 @@ namespace App
             try
             {
                 int cantidad = DBConexion.InsertarAutos(Taller.listaDeAutos);
+                if (cantidad == Taller.listaDeAutos.Count)
+                {
+                    Taller.listaDeAutos.Clear();
+                }
+                this.ActualizarRtbLista();
+
+                this.ActivarBtnFabricacion();
+                this.ActualizarLblFabricados();
 
                 MessageBox.Show($"Se insertaron {cantidad} de autos en la BD", "Insert");
             }
@@ -150,12 +178,42 @@ namespace App
                 MessageBox.Show(ex.Message, "Error");
             }
         }
-        private void ingresarUsuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void traerMotocicletasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FrmLogin frmLogin = new FrmLogin();
-            if (frmLogin.ShowDialog() == DialogResult.OK)
+            try
             {
+                int cantidad = DBConexion.TraerMotos();
+                this.ActualizarRtbLista();
+                MessageBox.Show($"Se trajeron {cantidad} motocicletas de la BD", "Select");
 
+                this.ActivarBtnFabricacion();
+                this.ActualizarLblFabricados();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+            }
+        }
+
+        private void insertarTodosLasMotocicletasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int cantidad = DBConexion.InsertarMotos(Taller.listaDeMotos);
+                if (cantidad == Taller.listaDeMotos.Count)
+                {
+                    Taller.listaDeMotos.Clear();
+                }
+                this.ActualizarRtbLista();
+
+                this.ActivarBtnFabricacion();
+                this.ActualizarLblFabricados();
+
+                MessageBox.Show($"Se insertaron {cantidad} de autos en la BD", "Insert");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
             }
         }
         #endregion
@@ -169,51 +227,151 @@ namespace App
         private void ActualizarLblFabricados()
         {
             this.lblFabricados.Text = $"";
-            this.lblFabricados.Text = $"Autos Fabricados: {Taller.listaDeAutos.Count}";
+            this.lblFabricados.Text = $"Vehiculos a Fabricar: {Taller.listaDeAutos.Count + Taller.listaDeMotos.Count}";
+        }
+
+        private void ActivarBtnFabricacion()
+        {
+            if(Taller.listaDeAutos.Count > 0 || Taller.listaDeMotos.Count > 0)
+            {
+                this.btnFabricar.Enabled = true;
+            }
+        }
+        private void Agregar()
+        {
+            try
+            {
+                string login = Archivos.LeerArchivoXml<string>();
+                if (login.Trim().Length > 0)
+                {
+                    if (this.rbtAuto.Checked == true)
+                    {
+                        Auto nuevoAuto = new Auto(
+                            this.txtNombre.Text,
+                            login,
+                            this.cmbCarroceria.Text,
+                            this.numUpDownnCantPuertas.Value.ToString(),
+                            this.cmbMotor.Text,
+                            this.cmbRuedaTipo.Text,
+                            this.cmbRuedasTamanio.Text);
+                        Taller.AgregarUnAuto(nuevoAuto);
+                        MessageBox.Show(nuevoAuto.FormatoAlert(), "Auto Creado");
+                    }
+                    if (this.rbtMotocicleta.Checked == true)
+                    {
+                        Motocicleta nuevaMoto = new Motocicleta(
+                            login,
+                            this.txtNombre.Text,
+                            this.cmbCarroceria.Text,
+                            this.cmbMotor.Text,
+                            this.cmbRuedaTipo.Text,
+                            this.cmbRuedasTamanio.Text);
+                        Taller.AgregarUnaMoto(nuevaMoto);
+                        MessageBox.Show(nuevaMoto.FormatoAlert(), "Auto Creado");
+                    }
+                    if (this.rbtAuto.Checked == false && this.rbtMotocicleta.Checked == false)
+                    {
+                        throw new Exception($"Seleccione si quiere agregar un Auto o una Motocicleta");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Es necesario loguearse. (Mirar la opciones)");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"ups, {ex.Message}");
+            }
         }
         private void ActivarFabricacion()
         {
             foreach (Auto auxAuto in Taller.listaDeAutos)
             {
-                auxAuto.EventoConstruir += FabricarAuto;
-                auxAuto.EventoConstruir += Informar;
-                auxAuto.EventoConstruir += CrearArchivo;
+                auxAuto.EventoConstruirAuto += FabricarVehiculo;
+                auxAuto.EventoConstruirAuto += Informar;
+                auxAuto.EventoConstruirAuto += CrearArchivo;
 
                 this.hiloFabricar = new Thread(new ParameterizedThreadStart(auxAuto.Proceso));
                 this.hiloFabricar.Start(auxAuto);
             }
+            foreach (Motocicleta auxMoto in Taller.listaDeMotos)
+            {
+                auxMoto.EventoConstruirMoto += FabricarVehiculo;
+                auxMoto.EventoConstruirMoto += Informar;
+                auxMoto.EventoConstruirMoto += CrearArchivo;
+
+                this.hiloFabricar = new Thread(new ParameterizedThreadStart(auxMoto.Proceso));
+                this.hiloFabricar.Start(auxMoto);
+            }
         }
-        private void FabricarAuto(object nuevoAuto)
+        private void FabricarVehiculo(object nuevoVehiculo)
         {
             try
             {
-                Auto auxNuevoAuto = (Auto)nuevoAuto;
-                Taller.EliminarAuto(auxNuevoAuto);
+                if (nuevoVehiculo.GetType() == typeof(Auto))
+                {
+                    Auto auxNuevoAuto = (Auto)nuevoVehiculo;
+                    Thread.Sleep(auxNuevoAuto.TiempoDeProcduccion() * 1000);
+                    Taller.EliminarAuto(auxNuevoAuto);
+                }
+                if (nuevoVehiculo.GetType() == typeof(Motocicleta))
+                {
+                    Motocicleta auxNuevaMoto = (Motocicleta)nuevoVehiculo;
+                    Thread.Sleep(auxNuevaMoto.TiempoDeProcduccion() * 1000);
+                    Taller.EliminarMoto(auxNuevaMoto);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error");
             }
         }
-        private void CrearArchivo(object nuevoAuto)
+        private void CrearArchivo(object nuevoVehiculo)
         {
-            Taller.EntregarAuto((Auto)nuevoAuto);
+            if (nuevoVehiculo.GetType() == typeof(Auto))
+                Taller.Entregar((Auto)nuevoVehiculo);
+            if (nuevoVehiculo.GetType() == typeof(Motocicleta))
+                Taller.Entregar((Motocicleta)nuevoVehiculo);
+            
             this.hiloFabricar.Abort();
         }
-        private void Informar(object autoFabricado)
+        private void Informar(object vehiculoFabricado)
         {
-            Auto auxAuto = (Auto)autoFabricado;
-            if (this.lblFabricados.InvokeRequired)
+            if (vehiculoFabricado.GetType() == typeof(Auto))
             {
-                Construir d = new Construir(Informar);
-                object[] objs = new object[] { auxAuto };
-                this.Invoke(d, objs);
+                Auto auxAuto = (Auto)vehiculoFabricado;
+                if (this.lblFabricados.InvokeRequired)
+                {
+                    ConstruirAuto d = new ConstruirAuto(Informar);
+                    object[] objs = new object[] { auxAuto };
+                    this.Invoke(d, objs);
+                }
+                else
+                {
+                    MessageBox.Show($"Auto: {auxAuto.Nombre} fué creado");
+                    this.ActualizarLblFabricados();
+                }
             }
-            else
+            if (vehiculoFabricado.GetType() == typeof(Motocicleta))
             {
-                MessageBox.Show($"Auto: {auxAuto.Nombre} fué creado");
-                this.ActualizarLblFabricados();
+                Motocicleta auxNuevaMoto = (Motocicleta)vehiculoFabricado;
+                if (this.lblFabricados.InvokeRequired)
+                {
+                    ConstruirMoto d = new ConstruirMoto(Informar);
+                    object[] objs = new object[] { auxNuevaMoto };
+                    this.Invoke(d, objs);
+                }
+                else
+                {
+                    MessageBox.Show($"Motocicleta: {auxNuevaMoto.Nombre} fué creado");
+                    this.ActualizarLblFabricados();
+                }
             }
+
+            if(Taller.listaDeAutos.Count == 0 && Taller.listaDeMotos.Count == 0)
+                this.lblProceso.Text = "Proceso: sin trabajo";
+
         }
         #endregion
     }

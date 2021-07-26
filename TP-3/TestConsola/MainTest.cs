@@ -15,25 +15,24 @@ namespace TestConsola
 
             Funciones.Separador();
 
-            Funciones.TestAgregarUnVehiculo();
-
+            Funciones.Preparacion();
             Funciones.Pausa();
+
             Funciones.Separador();
 
-            Funciones.TestAgregarVehiculos();
-
+            Funciones.Fabricacion();
             Funciones.Pausa();
+
             Funciones.Separador();
 
-            Funciones.TestEliminarAuto();
-
+            Funciones.Mostrar();
             Funciones.Pausa();
+
             Funciones.Separador();
-
-            Funciones.TestMostrarLista();
-
+            
+            Funciones.CrearArchivos();
             Funciones.Pausa();
-            Funciones.Separador();
+            
         }
     }
 }

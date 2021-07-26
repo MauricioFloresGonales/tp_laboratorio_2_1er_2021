@@ -12,12 +12,12 @@ namespace Entidades
     public static class Archivos
     {
         #region Texto
-        public static void CrearArchivoTexto(string formato, string usuario, string nombreDelObjeto)
+        public static void CrearArchivoTexto(string vehiculo, string formato, string usuario, string nombreDelObjeto)
         {
             try
             {
                 //Ruta = App\bin\Debug
-                string ruta = string.Concat(Environment.CurrentDirectory, $"\\Auto.{usuario}.{nombreDelObjeto}.txt");
+                string ruta = string.Concat(Environment.CurrentDirectory, $"\\{vehiculo}.{usuario}.{nombreDelObjeto}.txt");
 
                 using (StreamWriter escritor = new StreamWriter(ruta, true))
                 {

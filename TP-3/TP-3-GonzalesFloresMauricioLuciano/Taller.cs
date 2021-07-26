@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading;
 using Formatos;
 
 namespace Entidades
@@ -11,11 +9,15 @@ namespace Entidades
     {
 
         public static List<Auto> listaDeAutos;
+        public static List<Motocicleta> listaDeMotos;
         static Taller()
         {
             listaDeAutos = new List<Auto>();
+            listaDeMotos = new List<Motocicleta>();
         }
-        public static void AgregarUnVehiculo(object auto)
+
+        #region Autos
+        public static void AgregarUnAuto(object auto)
         {
             try
             {
@@ -41,13 +43,13 @@ namespace Entidades
                 throw new Exception($"Ocurrio un error:\n{e.Message}");
             }
         }
-        public static void AgregarVehiculos(List<Auto> listaDeAutos)
+        public static void AgregarAutos(List<Auto> listaDeAutos)
         {
             try 
             {
                 foreach (Auto auxAuto in listaDeAutos)
                 {
-                    Taller.AgregarUnVehiculo(auxAuto);
+                    Taller.AgregarUnAuto(auxAuto);
                 }
             }
             catch (Exception e)
@@ -59,7 +61,6 @@ namespace Entidades
         {
             try
             {
-                Thread.Sleep(auto.TiempoDeProcduccion() * 1000);
                 Taller.listaDeAutos -= auto;
             }
             catch (Exception e)
@@ -67,57 +68,150 @@ namespace Entidades
                 throw new Exception($"Ocurrio un error:\n{e.Message}");
             }
         }
-
-        public static string MostrarLista()
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (Auto auto in listaDeAutos)
-            {
-                sb.Append(Taller.MostrarUnoDeLaLista(auto));
-            }
-            return sb.ToString();
-        }
-        public static string MostrarUnoDeLaLista(Auto autoAMostrar)
-        {
-            StringBuilder sb = new StringBuilder();
-            if(autoAMostrar.Id == 0)
-            {
-                sb.AppendLine($"-------------------Todavia no se le asignó un Id---------------------------------");
-            }
-            else
-            {
-                sb.AppendLine($"---------------------------------{autoAMostrar.Id}-------------------------------------------");
-            }
-            sb.AppendLine($"{autoAMostrar.MostrarDatos()}");
-
-            return sb.ToString();
-        }
-
-        public static string IdsEnApp()
-        {
-            string retorno = "";
-
-            for (int i = 0; i < Taller.listaDeAutos.Count; i++)
-            {
-                retorno += $"CAST({Taller.listaDeAutos[i].Id.ToString()} AS int)";
-                if(i < Taller.listaDeAutos.Count-1)
-                {
-                    retorno += " , ";
-                }
-            }
-            return retorno;
-        }
-        public static void EntregarAuto(Auto auto)
+        public static void Entregar(Auto auto)
         {
             try
             {
-                Archivos.CrearArchivoTexto(auto.FormatoArchivos(), auto.CreadoPor, auto.Nombre);
+                Archivos.CrearArchivoTexto("Auto", auto.FormatoArchivos(), auto.CreadoPor, auto.Nombre);
             }
             catch (Exception ex)
             {
 
                 throw new Exception(ex.Message);
             }
+        }
+        #endregion
+
+        #region Motocicletas
+
+        public static void AgregarUnaMoto(object moto)
+        {
+            try
+            {
+                Motocicleta auxMoto = (Motocicleta)moto;
+                if (listaDeMotos.Count > 0)
+                {
+                    foreach (Motocicleta v in listaDeMotos)
+                    {
+                        if (v == auxMoto)
+                        {
+                            throw new Exception("La motocicleta que desea fabricar ya existe");
+                        }
+                    }
+                    listaDeMotos += auxMoto;
+                }
+                else
+                {
+                    listaDeMotos += auxMoto;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ocurrio un error:\n{e.Message}");
+            }
+        }
+
+        public static void AgregarMotos(List<Motocicleta> listaDeMotos)
+        {
+            try
+            {
+                foreach (Motocicleta auxMoto in listaDeMotos)
+                {
+                    Taller.AgregarUnaMoto(auxMoto);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ocurrio un error:\n{e.Message}");
+            }
+        }
+
+        public static void EliminarMoto(Motocicleta moto)
+        {
+            try
+            {
+                Taller.listaDeMotos -= moto;
+            }
+            catch (Exception e)
+            {
+                throw new Exception($"Ocurrio un error:\n{e.Message}");
+            }
+        }
+
+        public static void Entregar(Motocicleta moto)
+        {
+            try
+            {
+                Archivos.CrearArchivoTexto("Motocicleta", moto.FormatoArchivos(), moto.CreadoPor, moto.Nombre);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        #endregion
+
+        public static string MostrarLista()
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (Auto auto in listaDeAutos)
+                {
+                    sb.Append(Taller.MostrarUnoDeLaLista(auto));
+                }
+                foreach (Motocicleta moto in listaDeMotos)
+                {
+                    sb.Append(Taller.MostrarUnoDeLaLista(moto));
+                }
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
+        public static string MostrarUnoDeLaLista<T>(T vehiculo)where T:Vehiculo,IDetalles
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+
+                if (vehiculo.GetType() == typeof(Auto))
+                {
+                    if (vehiculo.Id == 0)
+                    {
+                        sb.AppendLine($"-------------------Auto---------------------------------");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"---------------------------------Auto {vehiculo.Id}-------------------------------------------");
+                    }
+                    sb.AppendLine($"{vehiculo.MostrarDatos()}");
+                }
+                if (vehiculo.GetType() == typeof(Motocicleta))
+                {
+
+                    if (vehiculo.Id == 0)
+                    {
+                        sb.AppendLine($"-------------------Motocicleta---------------------------------");
+                    }
+                    else
+                    {
+                        sb.AppendLine($"-----------------------------Motocicleta {vehiculo.Id}-----------------------------------------");
+                    }
+                    sb.AppendLine($"{vehiculo.MostrarDatos()}");
+                }
+                return sb.ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }

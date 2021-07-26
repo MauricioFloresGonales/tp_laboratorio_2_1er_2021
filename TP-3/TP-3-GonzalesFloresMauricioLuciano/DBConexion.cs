@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entidades
 {
@@ -20,7 +17,9 @@ namespace Entidades
             DBConexion.consulta.CommandType = System.Data.CommandType.Text;
             DBConexion.consulta.Connection = DBConexion.miConexion;
         }
-        public static int TraerAutos(List<Auto> listaDeAutos)
+
+        #region Autos
+        public static int TraerAutos()
         {
             try
             {
@@ -47,9 +46,9 @@ namespace Entidades
                         datos["rueda_tamanio"].ToString()
                         );
                     
-                    if(!dato.AutoExiste(Taller.listaDeAutos))
+                    if(!dato.Existe(Taller.listaDeAutos))
                     {
-                        Taller.AgregarUnVehiculo(dato);
+                        Taller.AgregarUnAuto(dato);
                         cargados++;
                     }
                     
@@ -119,5 +118,106 @@ namespace Entidades
                 throw;
             }
         }
+
+        #endregion
+
+        #region Motocicletas
+        public static int TraerMotos()
+        {
+            try
+            {
+                DBConexion.consulta.CommandText = "SELECT * FROM Motocicleta";
+
+                if (miConexion.State != System.Data.ConnectionState.Open)
+                {
+                    miConexion.Open();
+                }
+
+                SqlDataReader datos = DBConexion.consulta.ExecuteReader();
+
+                int cargados = 0;
+                while (datos.Read())
+                {
+                    Motocicleta dato = new Motocicleta(
+                        int.Parse(datos["id"].ToString()),
+                        datos["creado_por"].ToString().Trim(),
+                        datos["nombre"].ToString().Trim(),
+                        datos["chasis"].ToString().Trim(),
+                        datos["motor_tipo"].ToString(),
+                        datos["rueda_tipo"].ToString(),
+                        datos["rueda_tamanio"].ToString()
+                        );
+
+                    if (!dato.Existe(Taller.listaDeMotos))
+                    {
+                        Taller.AgregarUnaMoto(dato);
+                        cargados++;
+                    }
+
+                }
+                return cargados;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocurrio un error al cargar los Motocicleta\n{ex.Message}"); ;
+            }
+            finally
+            {
+                if (miConexion.State != System.Data.ConnectionState.Closed)
+                {
+                    miConexion.Close();
+                }
+            }
+        }
+        public static int InsertarMoto(Motocicleta aux)
+        {
+            try
+            {
+                DBConexion.consulta.CommandText = "INSERT INTO Motocicleta values (@creado_por,@nombre,@chasis,@motor_tipo,@rueda_tipo,@rueda_tamanio)";
+
+                DBConexion.consulta.Parameters.Clear();
+                DBConexion.consulta.Parameters.Add(new SqlParameter("@creado_por", aux.CreadoPor));
+                DBConexion.consulta.Parameters.Add(new SqlParameter("@nombre", aux.Nombre));
+                DBConexion.consulta.Parameters.Add(new SqlParameter("@chasis", aux.ChasisTipo.ChasisTipo.ToString()));
+                DBConexion.consulta.Parameters.Add(new SqlParameter("@motor_tipo", aux.Motor.MotorTipo.ToString()));
+                DBConexion.consulta.Parameters.Add(new SqlParameter("@rueda_tipo", aux.Ruedas.Tipo.ToString()));
+                DBConexion.consulta.Parameters.Add(new SqlParameter("@rueda_tamanio", aux.Ruedas.Tamanio.ToString()));
+
+                if (miConexion.State != System.Data.ConnectionState.Open)
+                {
+                    miConexion.Open();
+                }
+
+                return DBConexion.consulta.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (miConexion.State != System.Data.ConnectionState.Closed)
+                {
+                    miConexion.Close();
+                }
+            }
+        }
+        public static int InsertarMotos(List<Motocicleta> listaDeMotos)
+        {
+            try
+            {
+                int insertados = 0;
+                foreach (Motocicleta item in listaDeMotos)
+                {
+                    insertados += DBConexion.InsertarMoto(item);
+                }
+                return insertados;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        #endregion
     }
 }

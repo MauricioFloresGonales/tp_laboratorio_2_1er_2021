@@ -11,7 +11,6 @@ namespace Entidades
         Electrico,
         CicloOtto,
         Diesel
-
     }
     public class Motor : Parte, IDetalles
     {

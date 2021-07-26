@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enridades", "TP-3-GonzalesFloresMauricioLuciano\Enridades.csproj", "{C5EBCA45-E50C-43F2-90EB-593475A757FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidades", "TP-3-GonzalesFloresMauricioLuciano\Entidades.csproj", "{C5EBCA45-E50C-43F2-90EB-593475A757FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{26342372-5659-4BB9-8A0F-A02275A28E72}"
 EndProject

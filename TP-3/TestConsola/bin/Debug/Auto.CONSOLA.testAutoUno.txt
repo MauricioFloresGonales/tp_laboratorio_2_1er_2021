@@ -1,0 +1,18 @@
+|---------------------------------------|
+| Creado por:test1   Nombre:testAutoUno	|
+|					|
+|-------------=Carroceria=--------------|
+|         -Estilo: Clasico
+-Cantidad de Puertas: 3
+			|
+|					|
+|         -Tipo de motor: CicloOtto
+                  |
+|					|
+|         -Tipo de ruedas: Invierno
+-Tamanio: Mediana
+                  |
+|					|
+|       TIEMPO DE FABRICACIÓN: 7       |
+|					|
+
